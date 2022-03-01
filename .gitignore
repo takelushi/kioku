@@ -1,0 +1,13 @@
+# Python
+.venv/
+__pycache__/
+.coverage
+
+# Build folder
+dist/
+
+# Editor
+# .vscode/
+
+# Reporting
+report/
