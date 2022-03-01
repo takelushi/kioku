@@ -1,10 +1,3 @@
-"""Package."""
+"""Kioku."""
 
-
-def say_hello() -> str:
-    """Say hello.
-
-    Returns:
-        str: Message.
-    """
-    return 'Hello, world!'
+__version__ = '0.1.0'
