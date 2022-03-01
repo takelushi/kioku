@@ -1,37 +1,57 @@
-# Python Package Template
+# kioku
 
-Python package project template.
+Simple Cache Library for Python.
 
-## Steps
+## Usage
 
-1. Clone this project and rename.
+### Quick Start
 
-   ```sh
-   git clone git@github.com:takelushi/py-pkg-template.git
-   mv py-pkg-template <YOUR_REPOSITORY_NAME>
-   ```
+```python
+import time
 
-1. Setup repository.
+from kioku import Cache
 
-   ```sh
-   # Create pyproject.toml
-   bash setup.bash pyproject
-   vi pyproject.toml
+cache = Cache('./cache.pkl')
 
-   # Name project.
-   bash setup.bash name
+@cache.use()
+def calc():
+   time.sleep(3)
+   return 42
 
-   # Install packages
-   vi dev-requirements.txt
-   vi requirements.txt
-   bash setup.bash package
+# It takes 3 sec...
+print(calc())
+# => 42
 
-   # Clean repository.
-   bash setup.bash clean
-   rm setup.bash
-   ```
+# Without to run calc() by using cache.
+print(calc())
+# => 42
 
-1. Integrate to CircleCI. (If you want)
+# Cache is saved as dict.
+# And key is function name.
+print(cache.get('calc'))
+# => 42
+```
+
+### Basic
+
+```py
+# Set manually
+cache.set('key', 123)
+print(cache.get('key'))
+# => 123
+
+# Clear
+cache.clear('key')
+print(cache.get('key'))
+# => None
+```
+
+### Auto Reloading Cache File
+
+```py
+cache = Cache('cache.pkl', auto_reload=True)
+```
+
 
 ## Development
 

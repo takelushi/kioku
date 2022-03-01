@@ -1,10 +1,7 @@
-"""Package."""
+"""Kioku."""
 
+from kioku.cache import Cache
 
-def say_hello() -> str:
-    """Say hello.
+__version__ = '0.1.0'
 
-    Returns:
-        str: Message.
-    """
-    return 'Hello, world!'
+Cache = Cache
