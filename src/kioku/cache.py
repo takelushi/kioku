@@ -15,7 +15,7 @@ class Cache:
         """Initialize object.
 
         Args:
-            path (str): Cache path.
+            path (str): Cache file path.
             auto_reload (bool, optional): Auto reload or not.
         """
         self.path = path

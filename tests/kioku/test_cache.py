@@ -1,5 +1,6 @@
 """Test cache."""
 
+import os
 import pathlib
 import pickle
 import threading
@@ -22,6 +23,7 @@ class TestCache:
         """
         cache_path = tmp_path / 'cache.pkl'
         _ = Cache(cache_path)
+        assert os.path.exists(cache_path)
 
     def test_init_exist_cache(self, tmp_path: pathlib.PosixPath) -> None:
         """Test __init__().
@@ -194,35 +196,3 @@ class TestCache:
         assert cache_2.get(key) == value
         cache_2.clear(key)
         assert cache_1.get(key) is None
-
-    @pytest.mark.skip(reason='Not implemented')
-    def test_multithread(self, tmp_path: pathlib.PosixPath) -> None:
-        """Test multithread.
-
-        Args:
-            tmp_path (pathlib.PosixPath): Temporary path.
-        """
-        cache_path = tmp_path / 'cache.pkl'
-        cache = Cache(cache_path, auto_reload=True)
-
-        v_li = list(range(100))
-        key_li = [str(i) for i in v_li]
-
-        def f(k, v):
-            cache.set(k, v)
-
-        thread_li = [
-            threading.Thread(target=f, args=(k, v))
-            for k, v in zip(key_li, v_li)
-        ]
-
-        for thread in thread_li:
-            thread.start()
-
-        for thread in thread_li:
-            thread.join()
-
-        cache.load_file()
-        result = cache.cache
-        assert len(result.keys()) == len(key_li)
-        assert result == {k: v for k, v in zip(key_li, v_li)}
